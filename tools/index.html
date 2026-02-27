@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wasim — Tools & Work</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --serif: 'Instrument Serif', serif; --mono: 'Geist Mono', monospace; }
+  body { font-family: var(--mono); background: #f5f5f3; color: #1a1a1a; }
+  .serif { font-family: var(--serif); }
+  .serif-italic { font-family: var(--serif); font-style: italic; }
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { animation: fade-up 0.5s ease forwards; opacity: 0; }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; }
+  .delay-4 { animation-delay: 0.4s; }
+  .delay-5 { animation-delay: 0.55s; }
+
+  .tool-card {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  }
+  .tool-card:hover {
+    border-color: #1a1a1a;
+    box-shadow: 3px 3px 0 #1a1a1a;
+    transform: translate(-2px, -2px);
+  }
+
+  .rec-card {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    transition: border-color 0.2s;
+  }
+  .rec-card:hover { border-color: #aaa; }
+
+  .pill {
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    background: #f0f0ee;
+    color: #555;
+    padding: 4px 12px;
+    border-radius: 999px;
+    border: 1px solid #e0e0e0;
+  }
+
+  .btn-dark {
+    background: #1a1a1a;
+    color: #fff;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: background 0.2s;
+  }
+  .btn-dark:hover { background: #333; }
+
+  .btn-ghost {
+    border: 1px solid #d4d4d4;
+    color: #444;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    padding: 9px 18px;
+    border-radius: 8px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-ghost:hover { border-color: #1a1a1a; color: #1a1a1a; }
+
+  .social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #666;
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    transition: all 0.15s;
+    text-decoration: none;
+  }
+  .social-link:hover { border-color: #1a1a1a; color: #1a1a1a; background: #fff; }
+
+  .nav-link {
+    font-size: 0.85rem;
+    color: #888;
+    text-decoration: none;
+    transition: color 0.15s;
+    letter-spacing: 0.04em;
+  }
+  .nav-link:hover { color: #1a1a1a; }
+
+  .avatar {
+    width: 68px; height: 68px;
+    background: #1a1a1a;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif);
+    font-size: 1.9rem;
+    color: #f5f5f3;
+    flex-shrink: 0;
+  }
+
+  .star { color: #1a1a1a; font-size: 1rem; }
+
+  .tag-new {
+    font-size: 0.7rem;
+    background: #1a1a1a;
+    color: #fff;
+    padding: 2px 10px;
+    border-radius: 999px;
+    letter-spacing: 0.06em;
+  }
+
+  .divider { border: none; border-top: 1px solid #e8e8e8; }
+
+  /* Dot grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle, #ccc 1px, transparent 1px);
+    background-size: 28px 28px;
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .content { position: relative; z-index: 1; }
+
+  .follow-banner {
+    background: #1a1a1a;
+    color: #f5f5f3;
+    border-radius: 20px;
+  }
+
+  .tool-icon {
+    width: 48px; height: 48px;
+    background: #f0f0ee;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.35rem;
+    flex-shrink: 0;
+  }
+
+  .rec-avatar {
+    width: 48px; height: 48px;
+    background: #e8e8e6;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    font-family: var(--serif);
+  }
+</style>
+</head>
+<body class="min-h-screen">
+<div class="content max-w-3xl mx-auto px-7 py-12">
+
+  <!-- NAV -->
+  <nav class="flex items-center justify-between mb-16 fade-up">
+    <span class="text-lg font-medium tracking-tight">wasim.</span>
+    <div class="flex items-center gap-6">
+      <a href="#tools" class="nav-link">tools</a>
+      <a href="#recommendations" class="nav-link">recommendations</a>
+      <a href="#contact" class="nav-link">contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="mb-20">
+    <div class="fade-up delay-1">
+      <div class="flex items-start gap-5 mb-7">
+        <div class="avatar mt-1">W</div>
+        <div>
+          <div class="flex items-center gap-3 mb-1.5">
+            <h1 class="serif text-4xl leading-tight">Wasim</h1>
+            <span class="pill">available for work</span>
+          </div>
+          <p class="text-sm text-gray-500 tracking-wide">Builder · Maker of useful things</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="fade-up delay-2">
+      <p class="text-base leading-relaxed text-gray-600 mb-4 max-w-xl">
+        I build tools that save time and make decisions easier.
+        Everything here is free to use — built out of curiosity and shipped because someone might find it useful.
+      </p>
+      <p class="text-base leading-relaxed text-gray-600 max-w-xl">
+        If a tool helped you, <span class="serif-italic text-gray-800">tell someone about it.</span>
+      </p>
+    </div>
+
+    <div class="flex items-center gap-3 mt-8 fade-up delay-3">
+      <a href="#tools" class="btn-dark">Browse tools →</a>
+      <a href="#recommendations" class="btn-ghost">Recommendations</a>
+    </div>
+  </section>
+
+  <hr class="divider mb-20">
+
+  <!-- TOOLS -->
+  <section id="tools" class="mb-20">
+    <div class="flex items-center justify-between mb-8 fade-up">
+      <div>
+        <h2 class="serif text-3xl mb-1">Tools</h2>
+        <p class="text-sm text-gray-400">Free. No login. Just use.</p>
+      </div>
+      <span class="pill">6 tools</span>
+    </div>
+
+    <div class="space-y-3">
+
+      <div class="tool-card rounded-xl p-5 flex items-center gap-5 fade-up delay-1">
+        <div class="tool-icon">📊</div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-base font-medium">Break-even Calculator</span>
+            <span class="tag-new">new</span>
+          </div>
+          <p class="text-sm text-gray-400 truncate">Advanced multi-scenario profitability analysis with sensitivity charts</p>
+        </div>
+        <a href="breakeven-calculator.html" class="btn-ghost shrink-0">Open →</a>
+      </div>
+
+      <div class="tool-card rounded-xl p-5 flex items-center gap-5 fade-up delay-2">
+        <div class="tool-icon">💸</div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-base font-medium">Pricing Calculator</span>
+          </div>
+          <p class="text-sm text-gray-400 truncate">Set the right price with margin, markup & competitor analysis</p>
+        </div>
+        <a href="#" class="btn-ghost shrink-0">Open →</a>
+      </div>
+
+      <div class="tool-card rounded-xl p-5 flex items-center gap-5 fade-up delay-3">
+        <div class="tool-icon">📈</div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-base font-medium">ROI Estimator</span>
+          </div>
+          <p class="text-sm text-gray-400 truncate">Calculate return on investment across different time periods</p>
+        </div>
+        <a href="#" class="btn-ghost shrink-0">Open →</a>
+      </div>
+
+      <div class="tool-card rounded-xl p-5 flex items-center gap-5 fade-up delay-4">
+        <div class="tool-icon">🧮</div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-base font-medium">Cash Flow Planner</span>
+          </div>
+          <p class="text-sm text-gray-400 truncate">Monthly cash flow projections with runway estimator</p>
+        </div>
+        <a href="#" class="btn-ghost shrink-0">Open →</a>
+      </div>
+
+      <div class="tool-card rounded-xl p-5 flex items-center gap-5 fade-up delay-5">
+        <div class="tool-icon">⏱</div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-base font-medium">Time Value Calculator</span>
+          </div>
+          <p class="text-sm text-gray-400 truncate">PV, FV, annuity & compound interest in one tool</p>
+        </div>
+        <a href="#" class="btn-ghost shrink-0">Open →</a>
+      </div>
+
+      <div class="tool-card rounded-xl p-5 flex items-center gap-5 fade-up delay-5">
+        <div class="tool-icon">📋</div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-base font-medium">Invoice Generator</span>
+          </div>
+          <p class="text-sm text-gray-400 truncate">Create clean PDF invoices instantly — no account needed</p>
+        </div>
+        <a href="#" class="btn-ghost shrink-0">Open →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider mb-20">
+
+  <!-- FOLLOW BANNER -->
+  <section class="follow-banner p-10 mb-20 fade-up">
+    <div class="flex items-start justify-between gap-8 flex-wrap">
+      <div>
+        <p class="text-xs tracking-widest uppercase text-gray-400 mb-3">Follow along</p>
+        <h3 class="serif text-3xl text-white mb-3">More tools dropping soon.</h3>
+        <p class="text-base text-gray-400 max-w-xs leading-relaxed">
+          Follow on Twitter or LinkedIn to get notified when new tools go live. No newsletters, no spam.
+        </p>
+      </div>
+      <div class="flex flex-col gap-2.5 shrink-0 mt-1">
+        <a href="https://twitter.com/" target="_blank" class="flex items-center gap-3 text-sm text-gray-300 hover:text-white border border-gray-700 hover:border-gray-500 px-5 py-3 rounded-lg transition-all">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          Follow on X
+        </a>
+        <a href="https://linkedin.com/" target="_blank" class="flex items-center gap-3 text-sm text-gray-300 hover:text-white border border-gray-700 hover:border-gray-500 px-5 py-3 rounded-lg transition-all">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Follow on LinkedIn
+        </a>
+        <a href="https://github.com/" target="_blank" class="flex items-center gap-3 text-sm text-gray-300 hover:text-white border border-gray-700 hover:border-gray-500 px-5 py-3 rounded-lg transition-all">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+          Follow on GitHub
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECOMMENDATIONS -->
+  <section id="recommendations" class="mb-20">
+    <div class="flex items-center justify-between mb-8 fade-up">
+      <div>
+        <h2 class="serif text-3xl mb-1">Recommendations</h2>
+        <p class="text-sm text-gray-400">What people are saying</p>
+      </div>
+      <span class="pill">4 reviews</span>
+    </div>
+
+    <div class="space-y-4">
+
+      <div class="rec-card rounded-xl p-6 fade-up delay-1">
+        <div class="flex items-start gap-4">
+          <div class="rec-avatar">S</div>
+          <div class="flex-1">
+            <div class="flex items-center justify-between mb-2">
+              <div>
+                <span class="text-base font-medium">Sarah K.</span>
+                <span class="text-sm text-gray-400 ml-2">Product Manager</span>
+              </div>
+              <div class="flex gap-0.5 text-base">★★★★★</div>
+            </div>
+            <p class="text-sm text-gray-500 leading-relaxed">"The break-even calculator saved me hours of spreadsheet work. Clean, fast, and actually gave me the numbers I needed for my investor deck."</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="rec-card rounded-xl p-6 fade-up delay-2">
+        <div class="flex items-start gap-4">
+          <div class="rec-avatar">M</div>
+          <div class="flex-1">
+            <div class="flex items-center justify-between mb-2">
+              <div>
+                <span class="text-base font-medium">Mohamed A.</span>
+                <span class="text-sm text-gray-400 ml-2">Startup Founder</span>
+              </div>
+              <div class="flex gap-0.5 text-base">★★★★★</div>
+            </div>
+            <p class="text-sm text-gray-500 leading-relaxed">"Bookmarked this site. The tools are no-fluff, just work. The sensitivity analysis feature is genuinely useful for stress-testing assumptions."</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="rec-card rounded-xl p-6 fade-up delay-3">
+        <div class="flex items-start gap-4">
+          <div class="rec-avatar">L</div>
+          <div class="flex-1">
+            <div class="flex items-center justify-between mb-2">
+              <div>
+                <span class="text-base font-medium">Lina R.</span>
+                <span class="text-sm text-gray-400 ml-2">Freelance Designer</span>
+              </div>
+              <div class="flex gap-0.5 text-base">★★★★★</div>
+            </div>
+            <p class="text-sm text-gray-500 leading-relaxed">"Finally a financial tool that doesn't look like it was made in 2009. Used the break-even calculator to price my services properly. Recommended."</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="rec-card rounded-xl p-6 fade-up delay-4">
+        <div class="flex items-start gap-4">
+          <div class="rec-avatar">J</div>
+          <div class="flex-1">
+            <div class="flex items-center justify-between mb-2">
+              <div>
+                <span class="text-base font-medium">James T.</span>
+                <span class="text-sm text-gray-400 ml-2">Small Business Owner</span>
+              </div>
+              <div class="flex gap-0.5 text-base">★★★★★</div>
+            </div>
+            <p class="text-sm text-gray-500 leading-relaxed">"Shared this with my whole team. We use it every time we're evaluating a new product line. The export to image feature is a nice touch for presentations."</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Leave a recommendation CTA -->
+    <div class="mt-5 p-6 rounded-xl border border-dashed border-gray-300 text-center fade-up delay-5">
+      <p class="text-sm text-gray-400 mb-3">Used a tool? Share your experience.</p>
+      <a href="mailto:wasim@example.com?subject=Recommendation" class="btn-ghost inline-block">Leave a recommendation →</a>
+    </div>
+  </section>
+
+  <hr class="divider mb-12">
+
+  <!-- FOOTER / CONTACT -->
+  <footer id="contact" class="fade-up">
+    <div class="flex items-center justify-between flex-wrap gap-5 mb-7">
+      <div>
+        <p class="text-base font-medium mb-1">Wasim</p>
+        <p class="text-sm text-gray-400">Building tools · open to collabs</p>
+      </div>
+      <div class="flex items-center gap-2.5 flex-wrap">
+        <a href="https://twitter.com/" target="_blank" class="social-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          Twitter / X
+        </a>
+        <a href="https://linkedin.com/" target="_blank" class="social-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn
+        </a>
+        <a href="https://github.com/" target="_blank" class="social-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+          GitHub
+        </a>
+        <a href="mailto:wasim@example.com" class="social-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Email
+        </a>
+      </div>
+    </div>
+    <p class="text-sm text-gray-300 text-center pb-4">© 2025 Wasim · All tools free to use</p>
+  </footer>
+
+</div>
+</body>
+</html>
